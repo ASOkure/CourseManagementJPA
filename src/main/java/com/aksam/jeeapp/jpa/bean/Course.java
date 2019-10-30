@@ -11,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.persistence.ManyToOne;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REFRESH;
+import javax.persistence.JoinColumn;
 
 @ManagedBean (name="course")
 @RequestScoped
@@ -32,6 +36,8 @@ public class Course  implements Serializable {
 	@Column(name="credits")
 	private int credits;
 	
+	@ManyToOne(cascade = { MERGE, REFRESH })
+	@JoinColumn(name = "teacher_id", referencedColumnName = "id")
 	private Teacher teacher;
 	
 	public int getId() {
