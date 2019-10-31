@@ -1,6 +1,7 @@
 package com.aksam.jeeapp.jpa.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.REFRESH;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
 @ManagedBean (name="course")
 @RequestScoped
@@ -36,8 +38,18 @@ public class Course  implements Serializable {
 	@Column(name="credits")
 	private int credits;
 	
-	@ManyToOne(cascade = { MERGE, REFRESH })
-	@JoinColumn(name = "teacher_id", referencedColumnName = "id")
+	@ManyToMany(cascade = { MERGE, REFRESH }, mappedBy = "courses")
+	private List<Student> students;
+	
+	public List<Student> getStudents() {
+	return students;
+	}
+	public void setStudents(List<Student> students) {
+	this.students = students;
+	}
+	
+	
+	
 	private Teacher teacher;
 	
 	public int getId() {
@@ -67,6 +79,7 @@ public class Course  implements Serializable {
 	public void setTeacher(Teacher teacher) {
 	this.teacher = teacher;
 	}
+	
 	}
 	
 
